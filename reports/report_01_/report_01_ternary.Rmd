@@ -1,0 +1,65 @@
+---
+title: ''
+author: ''
+date: ''
+output: 
+  html_document:
+    df_print: paged
+    keep_md: true
+    toc: TRUE
+    toc_float: TRUE
+    theme: flatly 
+    code_download: TRUE
+  word_document:
+    reference_docx: style.1.docx
+---
+
+```{r setup, include = FALSE}
+
+  proj <- rprojroot::find_rstudio_root_file()
+  knitr::opts_knit$set(root.dir = proj)
+
+  knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, 
+                        fig.width  = 6 * 1.67, fig.height = 6)
+  
+  load(paste0(proj, "/data/er_data.RData"))
+  source(paste0(proj, "/scripts/functions.R"))
+  
+  library(descr)
+  library(tidyverse)
+  library(viridis)
+  library(flextable)
+  library(patchwork)
+  library(testthat)
+  library(knitr)
+# library(ggtern)
+  
+  # See QUERY (for others) and NOTE (to self) tags throughout. 
+
+```
+
+We might consider looking at the data as a composition at some point, which means to consider the relative contribution of each of the three time lags to the overall time from arrival to discharge. 
+
+```{r}
+
+  ggtern::ggtern(
+    data, 
+    aes(x = a_t_comp , y = t_s_comp , z = s_d_comp, fill = age_at_admission)
+    ) +
+    geom_point(mapping = aes(color = "Points"), size = 0.5, alpha = 0.1) +
+    scale_fill_viridis()
+
+```
+
+
+
+
+
+
+
+```{r sysinfo}
+
+  DescTools::SysInfo()
+
+```
+
